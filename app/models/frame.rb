@@ -3,9 +3,9 @@ class Frame < ApplicationRecord
   MAX_FRAME_NUMBER = 10
   MIN_FRAME_NUMBER = 1
   STRIKE_BALLS = 10
-  SCORE_INIT_COUNT = 2
-  SCORE_AFTER_DOUBLE_STRIKE_COUNT = 1
-  SCORE_AFTER_SPARE_COUNT = -1
+  DEEP_SCORE_INIT_COUNT = 2
+  DEEP_SCORE_AFTER_DOUBLE_STRIKE_COUNT = 1
+  DEEP_SCORE_AFTER_SPARE_COUNT = -1
 
   belongs_to  :game
 
@@ -57,18 +57,18 @@ class Frame < ApplicationRecord
   end
 
 
-  def score(deep_count=SCORE_INIT_COUNT)
-    return throws_score(1) if deep_count == SCORE_AFTER_SPARE_COUNT || deep_count < SCORE_AFTER_DOUBLE_STRIKE_COUNT
+  def score(deep_count=DEEP_SCORE_INIT_COUNT)
+    return throws_score(1) if deep_count == DEEP_SCORE_AFTER_SPARE_COUNT || deep_count < DEEP_SCORE_AFTER_DOUBLE_STRIKE_COUNT
 
     if strike?
-      return throws_score(1,2) if final? && deep_count < SCORE_INIT_COUNT
+      return throws_score(1,2) if final? && deep_count < DEEP_SCORE_INIT_COUNT
       return throws_score(1,2,3) if final?
       return throws_score(1) + next_frame_by_player_score(deep_count-1)
     end
 
-    return throws_score(1,2) if deep_count < SCORE_INIT_COUNT
+    return throws_score(1,2) if deep_count < DEEP_SCORE_INIT_COUNT
     return throws_score(1,2,3) if final?
-    return throws_score(1,2) + next_frame_by_player_score(SCORE_AFTER_SPARE_COUNT) if spare?
+    return throws_score(1,2) + next_frame_by_player_score(DEEP_SCORE_AFTER_SPARE_COUNT) if spare?
 
     throws_score(1,2)
   end
