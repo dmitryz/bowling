@@ -11,7 +11,7 @@ class Frame < ApplicationRecord
 
   validates_presence_of :game, :number, :player_number
   validates :number, numericality: { greater_than_or_equal_to: MIN_FRAME_NUMBER, less_than_or_equal_to: MAX_FRAME_NUMBER }
-  validate :validate_strike_balls
+  validate :validate_score
 
   def throws
     [self.throw1, self.throw2, self.throw3]
@@ -121,7 +121,7 @@ class Frame < ApplicationRecord
     return true
   end
 
-  def validate_strike_balls
+  def validate_score
     errors.add(:base, "Invalid thrown pins") unless valid_score?
   end
 
