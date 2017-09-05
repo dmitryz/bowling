@@ -4,7 +4,7 @@ class Frame < ApplicationRecord
   MIN_FRAME_NUMBER = 1
   STRIKE_BALLS = 10
   SCORE_INIT_COUNT = 2
-  SCORE_AFTER_STRIKE_COUNT = 1
+  SCORE_AFTER_DOUBLE_STRIKE_COUNT = 1
   SCORE_AFTER_SPARE_COUNT = -1
 
   belongs_to  :game
@@ -57,7 +57,7 @@ class Frame < ApplicationRecord
 
 
   def score(deep_count=SCORE_INIT_COUNT)
-    return throws_score(1) if deep_count == SCORE_AFTER_SPARE_COUNT || deep_count < SCORE_AFTER_STRIKE_COUNT
+    return throws_score(1) if deep_count == SCORE_AFTER_SPARE_COUNT || deep_count < SCORE_AFTER_DOUBLE_STRIKE_COUNT
 
     if strike?
       return throws_score(1,2) if final? && deep_count < SCORE_INIT_COUNT

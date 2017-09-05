@@ -12,7 +12,7 @@
     .row
       .col-sm-1= game.id
       .col-sm-2= game.players_count
-      .col-sm-2= game.score
+      .col-sm-2= (1..game.players_count).collect { |num| "#{num}##{game.score(num)}" }.join(",")
       .col-sm-1= game.frames.count
       .col-sm-1= game.game_over?.to_s
       .col-sm-2= game.created_at.to_s(:db)

@@ -40,7 +40,7 @@ class Game < ApplicationRecord
   end
 
   def current_player_name
-    self.players_names[current_player_number] if self.players_names
+    self.players_names[current_player_number-1] if self.players_names
   end
 
   def current_frame_throw
