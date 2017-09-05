@@ -11,7 +11,7 @@ class Game < ApplicationRecord
 
   def throw!(pins_down)
     frame = last_frame(current_player_number)
-    frame = frames.create!(player_number: current_player_number, number: current_frame_number) if frame.nil? || (frame.finished? && !frame.final?)
+    frame = frames.create!(player_number: current_player_number, number: current_frame_number) if switch_frame?(frame)
     frame.throw!(pins_down)
     frame
   end
@@ -49,9 +49,14 @@ class Game < ApplicationRecord
   end
 
   private
+
   def last_frame(player_number = nil)
     where_opts = player_number ? { player_number: player_number } : {}
     frames.where(where_opts).last
+  end
+
+  def switch_frame?(frame)
+    frame.nil? || (frame.finished? && !frame.final?)
   end
 
 end
