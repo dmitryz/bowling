@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   resources :games do
     post 'throw', on: :member
+    resources :frames, only: :index
   end
 end

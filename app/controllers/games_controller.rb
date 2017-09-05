@@ -18,11 +18,17 @@ class GamesController < ApplicationController
   end
 
   def throw
-    @game.throw!(params[:pins_down])
+    notice = "Ball has been thrown"
+    begin
+      @game.throw!(params[:pins_down])
+    rescue ActiveRecord::RecordInvalid => e
+      notice = e.message
+    end
+
     if @game.game_over?
       redirect_to games_path, notice: 'Game over'
     else
-      redirect_to @game, notice: 'Ball has been thrown'
+      redirect_to @game, notice: notice
     end
   end
 

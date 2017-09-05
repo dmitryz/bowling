@@ -7,7 +7,7 @@
       .status
         = "Frame: #{@game.current_frame_number}, Player id: #{@game.current_player_number}, Player name: #{@game.current_player_name}, Throw: #{@game.current_frame_throw}"
       .score
-        = "Score (current player): #{@game.score(@game.current_player_number)}"
+        = "Players score: #{@game.decorate.players_score}"
 
     .well
       = simple_form_for @game, url: throw_game_path(@game), method: :post do |f|
@@ -16,4 +16,6 @@
             Pins down
           = text_field_tag :pins_down
         = f.submit "Throw!"
-= link_to "Back to games", games_path
+    = link_to "Back to games", games_path
+  .col-sm-8
+    =render partial: "frames/frame_stat", locals: { game: @game, frames: @game.frames }

@@ -1,0 +1,17 @@
+%h2= "Frames for Game: #{game.id}"
+-if frames.present?
+  .row
+    .col-sm-1 Number
+    .col-sm-1 Player
+    .col-sm-1 Throw1
+    .col-sm-1 Throw2
+    .col-sm-1 Throw3
+    .col-sm-2 Score
+  - frames.each do |frame|
+    .row
+      .col-sm-1= frame.number
+      .col-sm-1= frame.player_number
+      .col-sm-1= frame.throw1
+      .col-sm-1= frame.throw2
+      .col-sm-1= frame.throw3
+      .col-sm-2= frame.score
