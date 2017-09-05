@@ -1,0 +1,14 @@
+.row
+  .col-sm-4
+    .well
+      %h2= "Game ##{@game.id}"
+      .status
+        = "Frame: #{@game.current_frame_number}, Player id: #{@game.current_player_number}, Player name: #{@game.current_player_name}, Throw: #{@game.current_frame_throw}"
+
+    .well
+      = simple_form_for @game, url: throw_game_path(@game), method: :post do |f|
+        .throw_ball
+          .label
+            Pins down
+          = text_field_tag :pins_down
+        = f.submit "Throw!"
