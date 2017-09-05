@@ -73,6 +73,10 @@ class Frame < ApplicationRecord
     throws_score(1,2)
   end
 
+  def player_name
+    game.players_names[self.player_number-1] if game.players_names
+  end
+
   private
 
   def throws_score(*throws)
