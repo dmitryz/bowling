@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :find_game, only: [:show, :throw]
+  before_action :find_game, only: [:show, :throw, :destroy]
 
   def create
     @game = Game.new(game_params[:game])
@@ -28,6 +28,11 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
+  end
+
+  def destroy
+    @game.destroy
+    redirect_to games_path, notice: "Game has been destroyed"
   end
 
   private

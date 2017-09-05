@@ -14,4 +14,6 @@
           - wrapper_class = visibility_class + " player_wrapper_#{number+1}" 
           = f.input :players_names, as: :string, multiple: true, label: "Player #{number+1}", input_html: { name: 'game[players_names][]', id: "player#{number+1}"}, wrapper_html: { class: wrapper_class }
         = f.submit "Start game"
+    = link_to "Back to games", games_path
 #settings.player_hiddden{data: { max_players: Game::MAX_PLAYERS }}
+

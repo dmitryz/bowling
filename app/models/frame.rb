@@ -13,7 +13,7 @@ class Frame < ApplicationRecord
   validates :number, numericality: { greater_than_or_equal_to: MIN_FRAME_NUMBER, less_than_or_equal_to: MAX_FRAME_NUMBER }
 
   def throws
-    [self.throw1, self.throw2, self.throw3].map(&:to_i)
+    [self.throw1, self.throw2, self.throw3]
   end
 
   def throw!(pins_down)
@@ -38,16 +38,16 @@ class Frame < ApplicationRecord
   end
 
   def throw_number
-    throws.reject(&:zero?).count + 1
+    throws.reject(&:nil?).count + 1
   end
 
   def finished?
     if final?
-      return true if (strike? || spare?) && self.throws.third.nonzero?
-      return true if (!strike? && !spare?) && self.throws.second.nonzero?
+      return true if (strike? || spare?) && self.throws.third
+      return true if (!strike? && !spare?) && self.throws.second
       return false
     else
-      return strike? || self.throws.second.nonzero?
+      return strike? || self.throws.second
     end
   end
 
@@ -75,7 +75,7 @@ class Frame < ApplicationRecord
   private
 
   def throws_score(*throws)
-    throws.collect { |i| self.throws[i-1] }.sum
+    throws.collect { |i| self.throws[i-1].to_i }.sum
   end
 
   def next_frame_by_player_score(deep_count)
@@ -92,7 +92,7 @@ class Frame < ApplicationRecord
   end
 
   def spare?
-    !strike? && (self.throws.first + self.throws.second) == STRIKE_BALLS
+    !strike? && throws_score(1,2) == STRIKE_BALLS
   end
 
   def add_throw(val)

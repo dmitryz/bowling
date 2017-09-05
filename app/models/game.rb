@@ -2,7 +2,7 @@ class Game < ApplicationRecord
   MIN_PLAYERS = 1
   MAX_PLAYERS = 8
 
-  has_many :frames
+  has_many :frames, dependent: :destroy
 
   serialize :players_names
 
@@ -40,7 +40,7 @@ class Game < ApplicationRecord
   end
 
   def current_player_name
-    self.players_names[current_player_number]
+    self.players_names[current_player_number] if self.players_names
   end
 
   def current_frame_throw

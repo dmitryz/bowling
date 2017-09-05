@@ -1,3 +1,23 @@
 %h2 Last Played Games
-
+-if @games.present?
+  .row
+    .col-sm-1 GameID
+    .col-sm-2 Count of players
+    .col-sm-2 Score
+    .col-sm-1 Frames
+    .col-sm-1 Finished?
+    .col-sm-2 Created at
+    .col-sm-2 Actions
+  - @games.each do |game|
+    .row
+      .col-sm-1= game.id
+      .col-sm-2= game.players_count
+      .col-sm-2= game.score
+      .col-sm-1= game.frames.count
+      .col-sm-1= game.game_over?.to_s
+      .col-sm-2= game.created_at.to_s(:db)
+      .col-sm-3
+        = link_to "Del", game_path(game), method: :delete, data: { confirm: "Are you sure?" }
+        -unless game.game_over?
+          = link_to "Continue", game_path(game)
 = link_to "Play new game", new_game_path
